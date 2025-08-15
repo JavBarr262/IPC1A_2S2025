@@ -21,6 +21,7 @@ private static final Scanner scanner = new Scanner(System.in);
   //Nos pidieron como maximo que se pudierna asignar 5 habilidades como maximo
   private static String[][] habilidades=new String[100][5];
   private static int[] nivelpersonaje=new int[100];
+  private static boolean[] personajesActivos = new boolean[100];
 
  
   public static void main(String[] args){
@@ -181,7 +182,18 @@ try{
        }
    } 
     public static void Verlistapersonajes(){
- 
+        if(Cantidadpersonajes==0){
+        System.out.print("No hay personajes creados");
+        return;
+        }
+        System.out.println("***Listado de los personajes***");
+         System.out.printf("%-5s %-20s %-20s  %-10s\n","ID", "Nombre", "Objeto/Arma", "Nivel");
+        for (int a = 0; a < Cantidadpersonajes; a++) {
+        
+        System.out.printf("%-5d %-20s %-20s  %-10d\n",(a + 1), nombres[a], objetos[a], nivelpersonaje[a]);
+        }
+       
+                
 
 }
     public static void Pelea(){
@@ -189,9 +201,28 @@ try{
 
 }
        public static void Editarinfo(){
-              System.out.println("*Editar informacion*");
+        if(Cantidadpersonajes==0){
+        System.out.println("No hay datos de personajes porfavor registre algun personaje");
+        }
+        System.out.println("**Info Personajes**");
+        int ID=IDeditarpersonajes();
+        if (ID==-1)return;
 
 }
+       public static int IDeditarpersonajes(){
+       try{
+           System.out.print("Seleccione el ID del personaje qu quiera editar: ");
+           int ID=Integer.parseInt(scanner.nextLine());
+           if(ID<1 || ID>Cantidadpersonajes){
+           System.out.println("ID erroneo ingrese uno valido nuevamente");
+           return -1;
+           }
+           return ID;
+       }catch(NumberFormatException e){
+       System.out.println("ingrese un valor valido");
+       return -1;
+       }
+   } 
     public static void Eliminar(){
               System.out.println("*Eliminar*");
 
