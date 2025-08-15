@@ -39,6 +39,7 @@ private static final Scanner scanner = new Scanner(System.in);
   System.out.println("Eliminar personaje=6");
   System.out.println("Ver historial de las peleas realizadas=7");
   System.out.println("Terminar proceso=8");
+  System.out.print("Escoja la opcion que quiera realizar:   ");
 try{
     validacion=Integer.parseInt(scanner.nextLine());
     switch(validacion){
@@ -97,7 +98,7 @@ try{
        System.out.println("Ingrese las habilidades puen ser hasta  *si no quiere ingresar ninguna habilidad puede dejar el espacio vacio presionando enter*:  ");
        int Cantidadhabilidades=0;
        for(int a=0;a<5;a++){
-        System.out.print("Habilidad no."+(a+1));
+        System.out.print("Habilidad no."+(a+1)+"   ");
         String habilidad=scanner.nextLine();
         if(!habilidad.isEmpty()){
             habilidadesP[a]=habilidad;
@@ -131,17 +132,56 @@ try{
        }
        nivelpersonaje[Cantidadpersonajes]=Nivel;
        Cantidadpersonajes++;
-       System.out.print("***el personaje que creo se agrego correctamente No."+Cantidadpersonajes+"***");
+       System.out.print("***el personaje que creo se agrego correctamente No. ID: "+Cantidadpersonajes+"***");
 
     
     }
     
     public static void Verinfopersonajes(){
-              System.out.println("*ver info personajes*");
+               if(Cantidadpersonajes==0){
+        System.out.println("No hay datos de personajes porfavor registre algun personaje");
+        }
+        System.out.println("**Info Personajes**");
+        int ID=IDpersonajes();
+        if (ID==-1)return;
+        int lista=ID-1;
+        System.out.println("***Informacion de los personajes***");
+        System.out.println("ID: "+ID);
+        System.out.println("nombre: "+nombres[lista]);
+        System.out.println("arma/obejto equipado: "+ objetos[lista]);
+        System.out.println("Nivel personaje: "+nivelpersonaje[lista]);
+        System.out.println("Habilidades del personaje: ");
+        
+        boolean Calcularhabilidades=false;
+        for(int a=0;a<5;a++){
+        if(habilidades[lista][a] !=null && !habilidades[lista][a].isEmpty()){
+            System.out.println(" * "+habilidades[lista][a]);
+            Calcularhabilidades=true;
+        }
+        if(!Calcularhabilidades){
+            System.out.println("no tiene habilidad asignada");
+        }
+
+        }
+        
 
 }
+   public static int IDpersonajes(){
+       try{
+           System.out.print("Seleccione el ID del personaje qu quiera ver: ");
+           int ID=Integer.parseInt(scanner.nextLine());
+           if(ID<1 || ID>Cantidadpersonajes){
+           System.out.println("ID erroneo ingrese uno valido nuevamente");
+           return -1;
+           }
+           return ID;
+       }catch(NumberFormatException e){
+       System.out.println("ingrese un valor valido");
+       return -1;
+       }
+   } 
     public static void Verlistapersonajes(){
-              System.out.println("*ver lista personajes*");
+ 
 
 }
     public static void Pelea(){
@@ -160,6 +200,8 @@ try{
               System.out.println("*Ver historial*");
 
 }
+
+  
   
   
 }
