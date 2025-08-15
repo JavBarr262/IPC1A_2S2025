@@ -96,7 +96,7 @@ try{
        String objeto=scanner.nextLine();
        
        String[] habilidadesP=new String[5];
-       System.out.println("Ingrese las habilidades puen ser hasta  *si no quiere ingresar ninguna habilidad puede dejar el espacio vacio presionando enter*:  ");
+       System.out.println("Ingrese las habilidades maximo 5 *si no quiere ingresar ninguna habilidad puede dejar el espacio vacio presionando enter*:  ");
        int Cantidadhabilidades=0;
        for(int a=0;a<5;a++){
         System.out.print("Habilidad no."+(a+1)+"   ");
@@ -207,8 +207,49 @@ try{
         System.out.println("**Info Personajes**");
         int ID=IDeditarpersonajes();
         if (ID==-1)return;
-
+        int editar=ID-1;
+      
+            boolean validacionnombres=false;
+       do{
+            System.out.print("Nuevo nombre: ");
+            nombres[editar] = scanner.nextLine();
+           if(nombres[editar].isEmpty()){
+               System.out.println("Porfavor ingrese algun nombre para le personaje que va a ser creado:   ");
+               continue;
+           }
+           validacionnombres=true;
+           for(int a=0; a<Cantidadpersonajes; a++){
+               if (nombres[a].equalsIgnoreCase(nombres[editar]) && a != editar){
+                   System.out.println("***El nombre ya existe ecriba uno diferente porfavor***");
+                   validacionnombres=false;
+                   break;
+               } else {
+               }
+           }
+          }while (!validacionnombres);
+              System.out.print("Escriba el nuevo objeto/arma que quiera registrar:   ");
+              objetos[editar]=scanner.nextLine();
+              
+ 
+       System.out.println("Ingrese las nuevas habilidades  *si no quiere ingresar ninguna habilidad puede dejar el espacio vacio presionando enter*:  ");
+      String[] habilidadesP=new String[5];
+       int Cantidadhabilidades=0;
+       for(int a=0;a<5;a++){
+        System.out.print("Habilidad no."+(a+1)+"   ");
+        habilidades[editar][a]=scanner.nextLine();
+        if(!habilidades[editar][a].isEmpty()){
+            habilidadesP[a]=habilidades[editar][a];
+            Cantidadhabilidades++;
+        }else{
+            break;
+        }
+    }           
+              
+              
+              
+              
 }
+       
        public static int IDeditarpersonajes(){
        try{
            System.out.print("Seleccione el ID del personaje qu quiera editar: ");
