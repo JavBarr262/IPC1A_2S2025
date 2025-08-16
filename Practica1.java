@@ -42,7 +42,12 @@ private static final Scanner scanner = new Scanner(System.in);
   System.out.println("Terminar proceso=8");
   System.out.print("Escoja la opcion que quiera realizar:   ");
 try{
+    
     validacion=Integer.parseInt(scanner.nextLine());
+    if (validacion < 1 || validacion > 8) {
+                System.out.println("Seleccione un numero que pertenezca a la lista por favor");
+                continue;
+            }
     switch(validacion){
         case 1 -> Creacionpersonajes();
         case 2 -> Verinfopersonajes();
@@ -92,8 +97,17 @@ try{
            }
           }while (!validacionnombres);
        
-       System.out.print("Escriba el objeto/arma que quiera asignarle al personaje:   ");
+       boolean validacionobjetos=false;
+       do{
+           System.out.print("Escriba el objeto/arma que quiera asignarle al personaje:   ");
        String objeto=scanner.nextLine();
+       if(objeto.isEmpty()){
+               System.out.println("Porfavor ingrese algun objeto/arma para le personaje que va a ser creado:   ");
+               continue;
+           }
+           validacionobjetos=true;
+       }while (!validacionobjetos);
+       
        
        String[] habilidadesP=new String[5];
        System.out.println("Ingrese las habilidades maximo 5 *si no quiere ingresar ninguna habilidad puede dejar el espacio vacio presionando enter*:  ");
