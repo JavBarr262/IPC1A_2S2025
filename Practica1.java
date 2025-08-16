@@ -6,7 +6,7 @@ package com.mycompany.practica1;
 
 /**
  *
- * @author USUARIO
+ * @author JavvBarr262
  */
 //utilizo la libreria de scanner para poder leer los datos de la lista de manera sencilla 
 import java.util.Scanner;
@@ -22,6 +22,7 @@ private static final Scanner scanner = new Scanner(System.in);
   private static String[][] habilidades=new String[100][5];
   private static int[] nivelpersonaje=new int[100];
 
+  
  
   public static void main(String[] args){
   Menu();
@@ -195,8 +196,54 @@ try{
                 
 
 }
-    public static void Pelea(){
-              System.out.println("*Pelea*");
+        public static void Pelea(){
+    if (Cantidadpersonajes < 2) {
+        System.out.println("En este apartado debe ingresar 2 personajes");
+        return;
+    }
+    System.out.println("*** Pelea entre personajes ***");
+    int ID1, ID2;
+    do {
+        System.out.print("Ingrese primer personaje por medio del ID:  ");
+        try {
+            ID1 = Integer.parseInt(scanner.nextLine());
+            if (ID1 < 1 || ID1 > Cantidadpersonajes) {
+                System.out.println("Por favor ingrese un ID valido");
+                ID1 = -1;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Ingrese un ID valido");
+            ID1 = -1;
+        }
+    } while (ID1 == -1);
+
+    do {
+        System.out.print("Ingrese segundo personaje por medio del ID: ");
+        try {
+            ID2 = Integer.parseInt(scanner.nextLine());
+            if (ID2 < 1 || ID2 > Cantidadpersonajes || ID2 == ID1) {
+                System.out.println("ID inválido o igual al primero. Intente de nuevo.");
+                ID2 = -1;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Ingrese un número válido.");
+            ID2 = -1;
+        }
+    } while (ID2 == -1);
+
+            int nivel1 = nivelpersonaje[ID1 - 1];
+            int nivel2 = nivelpersonaje[ID2 - 1];
+
+         System.out.println("Nivel de " + nombres[ID1 - 1] + ": " + nivel1);
+         System.out.println("Nivel de " + nombres[ID2 - 1] + ": " + nivel2);
+
+           if (nivel1 > nivel2) {
+        System.out.println( nombres[ID1 - 1] + " es el vencedor");
+        } else if (nivel2 > nivel1) {
+        System.out.println(nombres[ID2 - 1] + " es el vencedor");
+          } else {
+        System.out.println("Empate debido a que los personajes tienen el mismo nivel");
+        }
 
 }
        public static void Editarinfo(){
