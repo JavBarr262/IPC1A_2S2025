@@ -97,16 +97,14 @@ try{
            }
           }while (!validacionnombres);
        
-       boolean validacionobjetos=false;
-       do{
-           System.out.print("Escriba el objeto/arma que quiera asignarle al personaje:   ");
-       String objeto=scanner.nextLine();
-       if(objeto.isEmpty()){
-               System.out.println("Porfavor ingrese algun objeto/arma para le personaje que va a ser creado:   ");
-               continue;
-           }
-           validacionobjetos=true;
-       }while (!validacionobjetos);
+          String objeto;
+            do {
+             System.out.print("Escriba el objeto/arma que quiera asignarle al personaje:   ");
+             objeto = scanner.nextLine().trim();
+             if (objeto.isEmpty()) {
+              System.out.println("***El objeto/arma no puede quedar vacio***");
+              }
+}            while (objeto.isEmpty());
        
        
        String[] habilidadesP=new String[5];
@@ -131,7 +129,7 @@ try{
            if(Nivel>=1 && Nivel<=100){
            validacionnivel=true;
            }else{
-           System.out.print("***El numero escrito no cumple con las condiciones porfavor ingrese uno que si lo haga***");
+           System.out.println("***El numero escrito no cumple con las condiciones porfavor ingrese uno que si lo haga***");
            }
            
            
@@ -287,11 +285,17 @@ try{
                }
            }
           }while (!validacionnombres);
-              System.out.print("Escriba el nuevo objeto/arma que quiera registrar:   ");
-              objetos[editar]=scanner.nextLine();
+       
+        do {
+        System.out.print("Escriba el nuevo objeto/arma que quiera regisrrar al personaje:   ");
+        objetos[editar] = scanner.nextLine().trim();
+        if (objetos[editar].isEmpty()) {
+        System.out.println("El objeto/arma no puede quedar vacio");
+        }
+        } while (objetos[editar].isEmpty());
               
  
-       System.out.println("Ingrese las nuevas habilidades  *si no quiere ingresar ninguna habilidad puede dejar el espacio vacio presionando enter*:  ");
+      System.out.println("Ingrese las nuevas habilidades  *si no quiere ingresar ninguna habilidad puede dejar el espacio vacio presionando enter*:  ");
       String[] habilidadesP=new String[5];
        int Cantidadhabilidades=0;
        for(int a=0;a<5;a++){
