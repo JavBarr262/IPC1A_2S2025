@@ -21,7 +21,6 @@ private static final Scanner scanner = new Scanner(System.in);
   //Nos pidieron como maximo que se pudierna asignar 5 habilidades como maximo
   private static String[][] habilidades=new String[100][5];
   private static int[] nivelpersonaje=new int[100];
-  private static boolean[] personajesActivos = new boolean[100];
 
  
   public static void main(String[] args){
@@ -49,10 +48,10 @@ try{
         case 3 -> Verlistapersonajes();
         case 4 -> Pelea();
         case 5 -> Editarinfo();
-        case 6 -> Eliminar();
+        case 6 -> confirmaciondeeliminacion();
         case 7 -> Verhistorial();
         case 8 -> {
-            System.out.println("Javier Antonio Barrios Calderon");
+            System.out.println("Javier Antonio Barrios Calderon 202308325");
             System.out.println("Proceso finalizado");
           }
         default -> {
@@ -243,16 +242,30 @@ try{
         }else{
             break;
         }
-    }           
-              
-              
-              
-              
+    } 
+       int Nivel=0;
+       boolean validacionnivel=false;
+       do{
+           try{
+           System.out.print("ingrese un valor para le nivel del personaje (tiene que estar enre 1-100 para que sea valido):  ");
+           Nivel=Integer.parseInt(scanner.nextLine());
+           if(Nivel>=1 && Nivel<=100){
+           validacionnivel=true;
+           }else{
+           System.out.print("***El numero escrito no cumple con las condiciones porfavor ingrese uno que si lo haga***");
+           }
+           
+           
+           }catch(NumberFormatException e){
+           System.out.print("ingrese un valor numerioc valido porfavor");
+           }
+       }while(!validacionnivel);
+       nivelpersonaje[editar]=Nivel;      
 }
        
        public static int IDeditarpersonajes(){
        try{
-           System.out.print("Seleccione el ID del personaje qu quiera editar: ");
+           System.out.print("Seleccione el ID del personaje al que desea aplicar este proceso: ");
            int ID=Integer.parseInt(scanner.nextLine());
            if(ID<1 || ID>Cantidadpersonajes){
            System.out.println("ID erroneo ingrese uno valido nuevamente");
@@ -264,10 +277,66 @@ try{
        return -1;
        }
    } 
-    public static void Eliminar(){
-              System.out.println("*Eliminar*");
+    public static void confirmaciondeeliminacion(){
+       if(Cantidadpersonajes==0){
+        System.out.println("No hay datos de personajes porfavor registre algun personaje");
+        }
+        System.out.println("**Eliminar Personaje**");
+        int ID=IDeditarpersonajes();
+        if (ID==-1)return;
+        int eliminar=ID-1;
+                System.out.println("**Info Personajes**");
+      
+        System.out.println("***Informacion de los personajes***");
+        System.out.println("ID: "+ID);
+        System.out.println("nombre: "+nombres[eliminar]);
+     int confirmacion=0;
+    System.out.println("Esta seguro de queerer eliminar a este personaje? si=1 NO=0");   
+    System.out.print("Escoja la opcion que quiera realizar:   ");    
+    try{
+    confirmacion =Integer.parseInt(scanner.nextLine());
+    switch(confirmacion){
+        case 0:
+            System.out.println("Proceso cancelado");
+  
+        case 1: 
+        System.out.println("Eliminando personaje");
+        Eliminar();
+   
+            
+          }
+    }catch (NumberFormatException error) {
+        System.out.println("Seleccione un numero de la lista porfavor");
+      }
+  }    
+
+public static void Eliminar(){
+              
+           int EL=IDeditarpersonajes();
+    if (EL==-1)return;
+        int eliminar2=EL-1;
+            System.out.println("el personaje se esta eliminando");
+             for (int a=eliminar2; a<Cantidadpersonajes-1; a++){
+            nombres[a] = nombres[a + 1];
+            objetos[a] = objetos[a + 1];
+            nivelpersonaje[a] = nivelpersonaje[a + 1];
+            for (int b = 0; b < 5; b++) {
+                habilidades[a][b] = habilidades[a + 1][b];
+            }
+        }
+
+        nombres[Cantidadpersonajes - 1] = null;
+        objetos[Cantidadpersonajes - 1] = null;
+        nivelpersonaje[Cantidadpersonajes - 1] = 0;
+        for (int b = 0; b < 5; b++) {
+            habilidades[Cantidadpersonajes - 1][b] = null;
+        }
+        Cantidadpersonajes--;
+        System.out.println("El personaje ha sido eliminado correctamente.");
 
 }
+
+
     public static void Verhistorial(){
               System.out.println("*Ver historial*");
 
