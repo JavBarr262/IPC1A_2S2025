@@ -357,19 +357,12 @@ public boolean guardarEstado(String archivo) {
     try (PrintWriter writer = new PrintWriter(new FileWriter(archivo))) {
         writer.println("===== PERSONAJES =====");
         writer.println("*** Listado de los personajes ***");
-        writer.printf("%-5s %-20s %-20s %-10s %-10s %-10s %-10s %-10s %-20s %-20s%n",
-                     "ID", "Nombre", "Objeto", "HP", "Ataque", "Velocidad", "Agilidad",
-                     "Defensa", "Batallas_ganadas", "Batallas_perdidas");
+        writer.printf("%-5s %-20s %-20s %-10s %-10s %-10s %-10s %-10s %-20s %-20s%n","ID", "Nombre", "Objeto", "HP", "Ataque", "Velocidad", "Agilidad", "Defensa", "Batallas_ganadas", "Batallas_perdidas");
         
-        // Guardar cada personaje
         for (int a = 0; a < Cantidadpersonajes; a++) {
-            writer.printf("%-5d %-20s %-20s %-10d %-10d %-10d %-10d %-10d %-20d %-20d%n",
-                         (a + 1), nombres[a], objetos[a], healtpoints[a], ataques[a],
-                         velocidades[a], agilidades[a], defensas[a],
-                         Batallasganadas[a], Batallasperdidas[a]);
+            writer.printf("%-5d %-20s %-20s %-10d %-10d %-10d %-10d %-10d %-20d %-20d%n",(a + 1), nombres[a], objetos[a], healtpoints[a], ataques[a], velocidades[a], agilidades[a], defensas[a],Batallasganadas[a], Batallasperdidas[a]);
         }
         
-        // Guardar batallas
         writer.println();
         writer.println("===== BATALLAS =====");
         writer.println("*** Bitácora de acciones ***");
@@ -384,6 +377,64 @@ public boolean guardarEstado(String archivo) {
         System.err.println("Error al guardar el estado en texto: " + e.getMessage());
     }
 }
+ public boolean cargarEstado(String archivo) {
+    try {
+        // Obtener la ruta del directorio actual de trabajo
+        String directorioActual = System.getProperty("user.dir");
+        File file = new File(directorioActual, archivo);
+        
+        System.out.println("Buscando archivo en: " + file.getAbsolutePath());
+        
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+        
+        // Cargar cantidad de personajes
+        Cantidadpersonajes = ois.readInt();
+        
+        // Inicializar arrays si es necesario
+        if (nombres == null || nombres.length < Cantidadpersonajes) {
+            nombres = new String[Math.max(50, Cantidadpersonajes * 2)];
+            objetos = new String[Math.max(50, Cantidadpersonajes * 2)];
+            healtpoints = new int[Math.max(50, Cantidadpersonajes * 2)];
+            ataques = new int[Math.max(50, Cantidadpersonajes * 2)];
+            velocidades = new int[Math.max(50, Cantidadpersonajes * 2)];
+            agilidades = new int[Math.max(50, Cantidadpersonajes * 2)];
+            defensas = new int[Math.max(50, Cantidadpersonajes * 2)];
+            Batallasganadas = new int[Math.max(50, Cantidadpersonajes * 2)];
+            Batallasperdidas = new int[Math.max(50, Cantidadpersonajes * 2)];
+        }
+        
+        // Cargar datos de cada personaje (coherente con guardarEstado)
+        for (int i = 0; i < Cantidadpersonajes; i++) {
+            nombres[i] = (String) ois.readObject();
+            objetos[i] = (String) ois.readObject();
+            healtpoints[i] = ois.readInt();
+            ataques[i] = ois.readInt();
+            velocidades[i] = ois.readInt();
+            agilidades[i] = ois.readInt();
+            defensas[i] = ois.readInt();
+            Batallasganadas[i] = ois.readInt();
+            Batallasperdidas[i] = ois.readInt();
+        }
+        
+        // Cargar bitácora
+        totalBitacora = ois.readInt();
+        if (accionesBitacora == null || accionesBitacora.length < totalBitacora) {
+            accionesBitacora = new String[Math.max(100, totalBitacora * 2)];
+        }
+        for (int i = 0; i < totalBitacora; i++) {
+            accionesBitacora[i] = (String) ois.readObject();
+        }
+        
+        ois.close();
+        System.out.println("Estado cargado correctamente desde: " + archivo);
+        return true;
+        
+    } catch (IOException | ClassNotFoundException e) {
+        System.out.println("Error al cargar el archivo: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    }
+}
      
 
         
@@ -396,12 +447,12 @@ public boolean guardarEstado(String archivo) {
         accionesBitacora[totalBitacora] = "[" + ahora.format(formato) + "] " + accion;
         totalBitacora++;
         } else {
-        System.out.println("*** La bitácora está llena, no se pueden registrar más acciones ***");
+        System.out.println("*** La bitacora está llena, no se pueden registrar más acciones ***");
          }
     }
     public static void bitacora() {
     if (totalBitacora == 0) {
-        System.out.println("*** La bitácora está vacía ***");
+        System.out.println("*** La bitacora está vacía ***");
         return;
     }
     System.out.println("\n*****Bitacora de acciones*****");

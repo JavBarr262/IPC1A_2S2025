@@ -44,6 +44,7 @@ public class Practica2 {
             buscarpornombre();
             break;
         case 8:
+            Guardarcargaestado();
             break;
         case 9:
             val=true;
@@ -273,6 +274,60 @@ public class Practica2 {
              }
           }
           }
+      }
+      
+      public static void Guardarcargaestado(){
+              System.out.println("\n===== Guardar/Cargar Estado del Sistema =====");
+        System.out.println("1. Guardar estado");
+        System.out.println("2. Cargar estado");
+        System.out.println("0. Volver al menú principal");
+        System.out.print("Seleccione una opcion: ");
+        
+        int opcion = validaciones();
+        
+        switch (opcion) {
+            case 1:
+                System.out.print("Nombre del archivo para guardar: ");
+                String archivoGuardar = scanner.nextLine();
+                
+                if (!archivoGuardar.endsWith(".txt")) {
+                    archivoGuardar += ".txt";
+                }
+                
+                procesos.guardarEstadoTexto(archivoGuardar);
+                boolean exitoGuardar = procesos.guardarEstado(archivoGuardar.replace(".txt", ".dat"));
+                
+                if (exitoGuardar) {
+                    System.out.println("Estado guardado con exito en " + archivoGuardar);
+                } else {
+                    System.out.println("Error al guardar el estado.");
+                }
+                break;
+                
+            case 2:
+                System.out.print("Nombre del archivo para cargar: ");
+                String archivoCargar = scanner.nextLine();
+                
+                if (!archivoCargar.endsWith(".dat")) {
+                    archivoCargar += ".dat";
+                }
+                
+                boolean exitoCargar = procesos.cargarEstado(archivoCargar);
+                
+                if (exitoCargar) {
+                    System.out.println("Estado cargado con exito desde " + archivoCargar);
+                } else {
+                    System.out.println("Error al cargar el estado.");
+                }
+                break;
+                
+            case 0:
+                return;
+                
+            default:
+                System.out.println("Opción invalida.");
+        }
+      
       }
       
 
