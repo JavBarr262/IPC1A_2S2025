@@ -4,6 +4,7 @@
 
 package com.mycompany.practica2;
 
+import java.io.File;
 import java.util.Scanner;
 
 /**
@@ -37,16 +38,14 @@ public class Practica2 {
             Buscarbatalla();
             break;
         case 6:
-            System.out.println("e");
+            Procesos.bitacora();
             break;
         case 7:
-            System.out.println("f");
+            buscarpornombre();
             break;
         case 8:
-            System.out.println("g");
             break;
         case 9:
-            System.out.println("h");
             val=true;
             System.out.println("Javier Antonio Barrios Calderon 20238325");
             System.out.println("Saliendo del menu");
@@ -146,6 +145,22 @@ public class Practica2 {
             Procesos ver=new Procesos();
             ver.buscarnombre(val,nombre);
         }
+   }
+ 
+   public static void buscarpornombre(){
+           System.out.println("\n-----bucar Personaje-----");
+           System.out.print("Ingrese el nombre del personaje que quiera busacar: ");
+           String buscar=scanner.nextLine();
+           int val=3;
+           if(buscar.matches("[a-zA-Z]+")){
+            String nombre=buscar;
+            Procesos ver=new Procesos();
+            ver.buscarnombre(val,nombre);
+            }else{
+           System.out.println("***ERROR:Ingrese un valor valido***");
+           return;
+           }
+   
    }
    
    public static void modificar(int i){
@@ -260,5 +275,9 @@ public class Practica2 {
           }
       }
       
-    
+
+
+
+
+
 }
