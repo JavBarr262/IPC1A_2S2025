@@ -108,6 +108,7 @@ public class Practica2 {
         }
    
    }
+   
    public static int valornum(String mensaje, int minimo, int maximo){
            int valor;
         while (true) {
@@ -280,7 +281,7 @@ public class Practica2 {
               System.out.println("\n===== Guardar/Cargar Estado del Sistema =====");
         System.out.println("1. Guardar estado");
         System.out.println("2. Cargar estado");
-        System.out.println("0. Volver al menú principal");
+        System.out.println("0. Volver al menu principal");
         System.out.print("Seleccione una opcion: ");
         
         int opcion = validaciones();
